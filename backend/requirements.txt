@@ -1,0 +1,11 @@
+Flask
+flask-cors
+transformers
+torch
+tika
+
+pymongo
+flask-jwt-extended
+bcrypt
+python-dotenv
+authlib
