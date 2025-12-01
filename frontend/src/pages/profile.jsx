@@ -1,27 +1,30 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 import { updateProfile, uploadProfilePhoto } from "../api/auth"; 
-import { User, Mail, Briefcase, Tag, Camera, Save, Loader, ChevronLeft } from "lucide-react";
+import { User, Mail, Briefcase, Tag, Camera, Save, Loader, Phone, MapPin, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const getDefaultAvatar = (name) => {
-    if (!name) return "";
-    return name.trim().charAt(0).toUpperCase();
-};
+const getDefaultAvatar = (name) =>
+    name ? name.trim().charAt(0).toUpperCase() : "";
 
 export default function ProfilePage() {
     const { user, refreshUserProfile } = useContext(AuthContext);
     const navigate = useNavigate();
-    
+
     const [profile, setProfile] = useState({
         name: user?.name || "",
         email: user?.email || "",
-        company: user?.company || "", 
-        role: user?.role || "", 
+        company: user?.company || "",
+        role: user?.role || "",
+        phone: user?.phone || "",
+        address: user?.address || "",
+        bio: user?.bio || "",
         picture: user?.picture || "",
     });
+
     const [saving, setSaving] = useState(false);
     const [uploading, setUploading] = useState(false);
+
     const fileInputRef = React.useRef(null);
 
     useEffect(() => {
@@ -30,163 +33,134 @@ export default function ProfilePage() {
             email: user?.email || "",
             company: user?.company || "",
             role: user?.role || "",
+            phone: user?.phone || "",
+            address: user?.address || "",
+            bio: user?.bio || "",
             picture: user?.picture || "",
         });
     }, [user]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProfile(prev => ({ ...prev, [name]: value }));
+        setProfile((prev) => ({ ...prev, [name]: value }));
     };
 
-    const pickFile = async (e) => {
+    const pickFile = (e) => {
         const file = e.target.files[0];
         if (!file) return;
 
         setUploading(true);
+
         const reader = new FileReader();
 
         reader.onload = async () => {
             const dataUrl = reader.result;
-            setProfile(prev => ({ ...prev, picture: dataUrl }));
+
+            setProfile((prev) => ({ ...prev, picture: dataUrl }));
 
             try {
                 await uploadProfilePhoto({ data_url: dataUrl });
                 await refreshUserProfile();
-                alert("Photo uploaded successfully!");
             } catch (err) {
                 alert("Photo upload failed");
-                console.error("Photo upload error:", err);
             } finally {
                 setUploading(false);
             }
         };
+
         reader.readAsDataURL(file);
     };
 
     const save = async () => {
         setSaving(true);
+
         try {
-            const { name, company, role } = profile;
-            await updateProfile({ name, company, role }); 
+            const { name, company, role, phone, address, bio } = profile;
+
+            await updateProfile({ name, company, role, phone, address, bio });
             await refreshUserProfile();
             alert("Profile updated successfully!");
         } catch (err) {
-            console.error("Profile save error:", err);
             alert("Save failed");
         } finally {
             setSaving(false);
         }
     };
-    
-    const avatarSource = profile.picture;
-    const defaultInitial = getDefaultAvatar(profile.name || user?.email);
+
+    const avatarInitial = getDefaultAvatar(profile.name || user?.email);
 
     return (
         <div className="page-container-app">
             <div className="container profile-page-container">
-                <button className="back-btn" onClick={() => navigate('/dashboard')}>
-                    <ChevronLeft size={20} /> Back to Dashboard
+
+                <button className="back-btn" onClick={() => navigate("/dashboard")}>
+                    ← Back to Dashboard
                 </button>
+
                 <div className="app-panel profile-panel">
-                    <div className="app-panel-header">
-                        <h2><User size={28} style={{ marginRight: '10px' }} /> User Profile</h2>
-                    </div>
-                    
+                    <h2>User Profile</h2>
+
+                    {/* Photo Section */}
                     <div className="profile-photo-section">
-                        {avatarSource ? (
-                            <img 
-                                src={avatarSource} 
-                                alt="User Avatar" 
-                                className="profile-avatar-large"
-                            />
+                        {profile.picture ? (
+                            <img src={profile.picture} className="profile-avatar-large" alt="avatar" />
                         ) : (
-                            <div className="profile-avatar-default">
-                                {defaultInitial}
-                            </div>
+                            <div className="profile-avatar-default">{avatarInitial}</div>
                         )}
-                        
-                        <button 
-                            className="photo-upload-btn" 
+
+                        <button
+                            className="photo-upload-btn"
                             onClick={() => fileInputRef.current.click()}
-                            disabled={uploading || saving}
+                            disabled={uploading}
                         >
-                            {uploading ? <Loader size={18} className="spinner" /> : <Camera size={18} />}
+                            {uploading ? <Loader className="spinner" /> : <Camera />}
                             {uploading ? "Uploading..." : "Change Photo"}
                         </button>
-                        
-                        <input 
-                            type="file" 
-                            accept="image/*" 
-                            onChange={pickFile} 
-                            ref={fileInputRef} 
-                            style={{ display: 'none' }}
-                            disabled={uploading || saving}
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={fileInputRef}
+                            onChange={pickFile}
+                            style={{ display: "none" }}
                         />
                     </div>
 
+                    {/* Profile Form */}
                     <div className="profile-form">
-                        
+
+                        <Input label="Full Name" icon={<User />} name="name" value={profile.name} onChange={handleChange} />
+                        <Input label="Email" icon={<Mail />} value={profile.email} readOnly disabled />
+
+                        <Input label="Company" icon={<Briefcase />} name="company" value={profile.company} onChange={handleChange} />
+                        <Input label="Role" icon={<Tag />} name="role" value={profile.role} onChange={handleChange} />
+                        <Input label="Phone" icon={<Phone />} name="phone" value={profile.phone} onChange={handleChange} />
+                        <Input label="Address" icon={<MapPin />} name="address" value={profile.address} onChange={handleChange} />
+
                         <div className="form-group-icon">
-                            <label><User size={16} /> Full Name</label>
-                            <input 
-                                name="name"
-                                value={profile.name} 
-                                onChange={handleChange}
-                                disabled={saving || uploading}
-                            />
+                            <label><FileText size={16} /> Bio</label>
+                            <textarea name="bio" value={profile.bio} onChange={handleChange} />
                         </div>
-                        
-                        <div className="form-group-icon">
-                            <label><Mail size={16} /> Email (read-only)</label>
-                            <input 
-                                name="email"
-                                value={profile.email} 
-                                readOnly 
-                                disabled 
-                                className="read-only-input"
-                            />
-                        </div>
-                        
-                        <div className="form-group-icon">
-                            <label><Briefcase size={16} /> Company Name</label>
-                            <input 
-                                name="company"
-                                value={profile.company} 
-                                onChange={handleChange}
-                                disabled={saving || uploading}
-                            />
-                        </div>
-                        
-                        <div className="form-group-icon">
-                            <label><Tag size={16} /> Role</label>
-                            <input 
-                                name="role"
-                                value={profile.role} 
-                                onChange={handleChange}
-                                disabled={saving || uploading}
-                            />
-                        </div>
+
                     </div>
 
-                    <button 
-                        onClick={save} 
-                        disabled={saving || uploading || !user} 
-                        className="profile-save-btn"
-                    >
-                        {saving ? (
-                            <div className="flex-center">
-                                <Loader size={20} className="spinner spin-fast" /> Saving...
-                            </div>
-                        ) : (
-                            <div className="flex-center">
-                                <Save size={20} /> Save Changes
-                            </div>
-                        )}
+                    {/* Save button */}
+                    <button className="profile-save-btn" disabled={saving} onClick={save}>
+                        {saving ? <Loader className="spinner" /> : <Save />}  
+                        {saving ? "Saving..." : "Save Changes"}
                     </button>
-                    
                 </div>
             </div>
+        </div>
+    );
+}
+
+/* Helper input component */
+function Input({ label, icon, ...rest }) {
+    return (
+        <div className="form-group-icon">
+            <label>{icon} {label}</label>
+            <input {...rest} />
         </div>
     );
 }

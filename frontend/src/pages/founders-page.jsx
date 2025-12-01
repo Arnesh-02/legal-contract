@@ -51,7 +51,7 @@ function FoundersPage() {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/get-template/founders")
+    fetch(`${import.meta.env.VITE_API_URL}/get-template/founders`)
       .then((res) => res.text())
       .then((text) => {
         setTemplate(text);
@@ -186,11 +186,16 @@ function FoundersPage() {
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
     try {
-      const response = await fetch("http://127.0.0.1:5000/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ document_type: "founders", context: formData }),
+      const response = await fetch("http://localhost:5000/generate", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        document_type: "founders",
+        context: formData
+      })
       });
+
 
       if (!response.ok) {
         throw new Error(`Failed to generate PDF: ${response.statusText}`);

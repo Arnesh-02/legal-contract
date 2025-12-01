@@ -1495,3 +1495,483 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #003366;
 }
 
+/* document history */
+.empty-documents {
+    text-align: center;
+    padding: 70px 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+}
+
+.empty-documents h2 {
+    margin-top: 20px;
+    font-size: 1.8rem;
+    color: var(--primary-navy);
+}
+
+.empty-documents p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+
+/* dashboard */
+
+/* 🌟 DASHBOARD STYLING */
+/* ----------------------------- */
+/* DASHBOARD LAYOUT (Smaller UI) */
+/* ----------------------------- */
+
+.dashboard-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.dashboard-container {
+    width: 100%;
+    max-width: 900px; /* ⭐ SMALLER CENTERED LAYOUT */
+    padding: 0 20px;
+}
+
+.dashboard-header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--primary-navy);
+}
+
+.dashboard-sub {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+/* GRID */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    margin-bottom: 25px;
+}
+
+/* Stat Cards Smaller */
+.stats-card.compact {
+    padding: 16px;
+    border-radius: 14px;
+    background: white;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+}
+
+.stats-card.compact strong {
+    font-size: 1.3rem;
+}
+
+/* -------------------- */
+/* GRAPH CARD - Small   */
+/* -------------------- */
+
+.graph-card.compact {
+    margin-top: 15px;
+    padding: 18px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: var(--shadow-md);
+}
+
+.graph-header h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.graph-inner {
+    height: 180px;  /* ⭐ Smaller graph height */
+}
+
+/* Hover effects */
+.stats-card:hover, .graph-card:hover {
+    transform: translateY(-3px);
+    transition: 0.2s ease;
+    box-shadow: var(--shadow-lg);
+}
+
+/* end*
+
+/* Advocates */
+
+/* Advocate Page Styling */
+
+/* --- VARIABLES --- */
+:root {
+  --primary-navy: #1a237e; /* Dark Blue */
+  --accent-blue: #3f51b5; /* Medium Blue */
+  --light-blue: #7986cb; /* Light Blue */
+  --text-primary: #212121; /* Dark Gray for text */
+  --text-secondary: #616161; /* Medium Gray */
+  --bg-light: #f5f5f5; /* Very Light Gray background */
+  --bg-white: #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+  --success-green: #388e3c;
+  --rating-star: #ffc107;
+}
+
+/* --- BASE STYLES & TYPOGRAPHY --- */
+body {
+  font-family: 'Inter', sans-serif; /* Use a modern, professional font */
+  background: var(--bg-light);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------- */
+/* WRAPPER */
+/* --------------------------------------------- */
+.advocates-wrapper, .profile-wrapper {
+  max-width: 1100px;
+  margin: auto;
+  padding: 3rem 1.5rem;
+}
+
+/* --------------------------------------------- */
+/* PAGE TITLES */
+/* --------------------------------------------- */
+.adv-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-navy);
+  margin-bottom: 0.5rem;
+}
+
+.adv-sub {
+  color: var(--text-secondary);
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+}
+
+/* --------------------------------------------- */
+/* SEARCH BAR */
+/* --------------------------------------------- */
+.adv-search-box {
+  display: flex;
+  align-items: center;
+  background: var(--bg-white);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.adv-search-box input {
+  border: none;
+  outline: none;
+  margin-left: 1rem;
+  width: 100%;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.adv-search-box .search-icon {
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------- */
+/* FILTERS */
+/* --------------------------------------------- */
+.adv-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.adv-filters select {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  flex: 1;
+  background: var(--bg-white);
+  font-size: 1rem;
+  color: var(--text-primary);
+  appearance: none; /* Remove default styling */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23616161' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+}
+
+/* --------------------------------------------- */
+/* GRID */
+/* --------------------------------------------- */
+.adv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* --------------------------------------------- */
+/* ADVOCATE CARD */
+/* --------------------------------------------- */
+.adv-card {
+  background: var(--bg-white);
+  border-radius: 16px; /* Slightly larger border-radius */
+  padding: 0;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  overflow: hidden;
+  border: 1px solid #eeeeee; /* Subtle border */
+}
+
+.adv-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--light-blue);
+}
+
+.adv-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.adv-details {
+  padding: 1.2rem 1.5rem;
+}
+
+.adv-details h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem 0;
+}
+
+.adv-special {
+  color: var(--accent-blue);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.adv-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.adv-rating .reviews {
+  color: var(--text-secondary);
+  margin-left: 4px;
+}
+
+.adv-price {
+  font-weight: 700;
+  color: var(--primary-navy);
+  font-size: 1.1rem;
+  margin-top: 0.8rem;
+}
+
+.no-results {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------- */
+/* PROFILE PAGE */
+/* --------------------------------------------- */
+.profile-card {
+  display: flex;
+  gap: 2.5rem;
+  background: var(--bg-white);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid #e0e0e0;
+}
+
+.profile-img {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 5px solid var(--bg-light);
+  box-shadow: var(--shadow-md);
+}
+
+.profile-info {
+  flex-grow: 1;
+}
+
+.profile-info h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+  margin-bottom: 0.3rem;
+}
+
+.profile-spec {
+  color: var(--accent-blue);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.profile-desc {
+  margin: 1.5rem 0;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Summary Details (Experience, Rating, Price) */
+.profile-info p {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+.profile-info strong {
+    color: var(--primary-navy);
+}
+
+/* --------------------------------------------- */
+/* BOOKING */
+/* --------------------------------------------- */
+.booking-box {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #f7f9fd; /* Light background for the booking box */
+  border: 1px solid #e3f2fd;
+}
+
+.booking-box label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+}
+
+.booking-box input {
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  margin: 0.5rem 0 1rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.book-btn {
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  cursor: pointer;
+  transition: .2s;
+  box-shadow: var(--shadow-sm);
+}
+
+.book-btn:hover {
+  background: var(--primary-navy);
+  box-shadow: var(--shadow-md);
+}
+
+.success-msg {
+  margin-top: 0.8rem;
+  color: var(--success-green);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    .profile-img {
+        width: 100%;
+        height: auto;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    .adv-filters {
+        flex-direction: column;
+    }
+}
+.profile-summary {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 1.5rem 0 0.5rem 0;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------- */
+/* SUCCESS POP-UP NOTIFICATION */
+/* --------------------------------------------- */
+
+/* Container to center the pop-up horizontally */
+
+
+/* The actual message box */
+.success-msg-popup {
+  background-color: var(--success-green); 
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg); 
+  font-weight: 700;
+  font-size: 1.1rem;
+  /* Animation for the pop-in effect */
+  animation: slide-in 0.5s ease-out;
+}
+
+/* --------------------------------------------- */
+/* SUCCESS POP-UP NOTIFICATION */
+/* --------------------------------------------- */
+
+/* Container to position and center the pop-up */
+.notification-container {
+  position: fixed;
+  /* 🎯 CHANGE: Adjust this value (e.g., 70px) to sit just below your Nav Bar */
+  top: 70px; 
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it's on top of everything */
+  display: flex;
+  justify-content: right;
+}
+
+/* The actual message box */
+.success-msg-popup {
+  background-color: var(--success-green); 
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg); 
+  font-weight: 700;
+  font-size: 1.1rem;
+  /* Animation for the pop-in effect */
+  animation: slide-in 0.5s ease-out;
+}
+
+/* Keyframes remain the same */
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,9 +1,10 @@
 # Logs
-
 node_modules/
 .env
 
 __pycache__/
+
+frontend/node_modules/
 ner_model/
 
 *.pyc

@@ -1,53 +1,81 @@
-import React from 'react';
-import { Download, Edit, FileText } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Download, FileText, FolderOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { getUserDocuments } from '../api/documents';
 
-// Mock data for the document list
-const mockDocuments = [
-    { id: 1, name: "Founders Agreement - Project X", type: "Generated", date: "2025-10-20", url: "#" },
-    { id: 2, name: "NDA - Vendor Contract V1", type: "Generated", date: "2025-10-15", url: "#" },
-    { id: 3, name: "Lease Agreement - Risk Report", type: "Analyzed", date: "2025-09-28", url: "#" },
-    { id: 4, name: "Software License Draft", type: "Generated", date: "2025-09-10", url: "#" },
-    { id: 5, name: "Privacy Policy Analysis", type: "Analyzed", date: "2025-09-01", url: "#" },
-];
-
-
-function DocumentHistoryPanel({ limit = null, title = "Recent Documents" }) {
+function DocumentHistoryPanel({ limit = null, title = "All Documents" }) {
+    const [docs, setDocs] = useState([]);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const documentsToShow = limit ? mockDocuments.slice(0, limit) : mockDocuments;
+
+    useEffect(() => {
+        const loadDocs = async () => {
+            try {
+                const res = await getUserDocuments();
+                setDocs(res.data || []);
+            } catch (err) {
+                console.error("Error loading documents:", err);
+            }
+            setLoading(false);
+        };
+        loadDocs();
+    }, []);
+
+    const documentsToShow = limit ? docs.slice(0, limit) : docs;
+
+    // ---------------- Empty State UI ----------------
+    if (!loading && documentsToShow.length === 0) {
+        return (
+            <div className="empty-documents">
+                <FolderOpen size={80} color="#2563eb" />
+                <h2>No Documents Found</h2>
+                <p>You haven’t generated any legal documents yet.</p>
+
+                <button
+                    className="profile-save-btn"
+                    onClick={() => navigate("/generate-founders-agreement")}
+                >
+                    Generate Your First Document
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="app-panel">
             <h2>{title}</h2>
-            <div className="document-list">
-                {documentsToShow.map(doc => (
-                    <div key={doc.id} className="document-item">
-                        <FileText size={20} color="var(--text-secondary)" style={{ marginRight: '15px' }} />
-                        <div className="doc-info">
-                            <h4>{doc.name}</h4>
-                            <p>Type: {doc.type} | Date: {doc.date}</p>
-                        </div>
-                        <div className="doc-actions">
-                            <button onClick={() => alert(`Viewing details for ${doc.name}`)}>
-                                View
-                            </button>
-                            {doc.type === 'Generated' && (
-                                <button onClick={() => alert(`Downloading ${doc.name}`)}>
-                                    <Download size={16} />
+
+            {loading ? (
+                <p>Loading documents...</p>
+            ) : (
+                <div className="document-list">
+                    {documentsToShow.map(doc => (
+                        <div key={doc._id} className="document-item">
+                            <FileText size={22} className="doc-icon" />
+
+                            <div className="doc-info">
+                                <h4>{doc.title}</h4>
+                                <p>
+                                    Type: {doc.type} | Date:{" "}
+                                    {new Date(doc.created_at).toLocaleDateString()}
+                                </p>
+                            </div>
+
+                            <div className="doc-actions">
+                                <button
+                                    onClick={() =>
+                                        window.open(
+                                            `${import.meta.env.VITE_API_URL}/api/documents/${doc._id}/download`,
+                                            "_blank"
+                                        )
+                                    }
+                                >
+                                    <Download size={18} />
                                 </button>
-                            )}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
-            {limit && mockDocuments.length > limit && (
-                <button 
-                    className="profile-save-btn" 
-                    style={{ width: 'auto', marginTop: '20px' }}
-                    onClick={() => navigate('/document-history')}
-                >
-                    View All Documents
-                </button>
+                    ))}
+                </div>
             )}
         </div>
     );

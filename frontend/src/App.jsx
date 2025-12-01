@@ -8,6 +8,7 @@ import ProtectedRoute from "./components/protected-route";
 import "./App.css"
 
 // Pages
+import AdvocateProfile from "./pages/advocates-profile";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
@@ -16,6 +17,7 @@ import Profile from "./pages/profile";
 import DocumentHistory from "./pages/document-History";
 import FoundersPage from "./pages/founders-page";
 import RiskAnalysisPage from "./pages/risk-analysis-page";
+import AdvocatesPage from "./pages/advocates-page";
 // Assuming these pages exist and need imports based on the routes
 import NDAPage from "./pages/nda-page";
 import Success from "./pages/success"; 
@@ -57,6 +59,17 @@ function App() {
             path="/generate-founders-agreement"
             element={<ProtectedRoute><FoundersPage /></ProtectedRoute>}
           />
+
+          <Route
+            path="/advocates"
+            element={<ProtectedRoute><AdvocatesPage /></ProtectedRoute>}
+          />
+
+          <Route
+            path="/advocates/:id"
+            element={<ProtectedRoute><AdvocateProfile /></ProtectedRoute>}
+          />
+
           <Route
             path="/download-complete"
             element={<ProtectedRoute><Success /></ProtectedRoute>}

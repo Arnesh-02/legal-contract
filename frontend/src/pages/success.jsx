@@ -17,7 +17,7 @@ function Success() {
     setLoading(true);
     setMessage("AI is redrafting your contract...");
     try {
-      const response = await fetch("http://127.0.0.1:5000/redraft", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/redraft`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -45,8 +45,7 @@ function Success() {
     setLoading(true);
     setMessage("Generating final PDF...");
     try {
-      const res = await fetch("http://127.0.0.1:5000/generate", {
-        method: "POST",
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/generate`, {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ html: redrafted }),
       });

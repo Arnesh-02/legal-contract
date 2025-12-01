@@ -70,7 +70,7 @@ function NDAPage() {
   };
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/get-template/nda")
+    fetch(`${import.meta.env.VITE_API_URL}/get-template/nda`)
       .then((res) => res.text())
       .then((text) => {
         setTemplate(text);
@@ -246,41 +246,43 @@ function NDAPage() {
   };
 
   const handleDownloadPDF = async () => {
-    setIsDownloading(true);
-    try {
-      const response = await fetch("http://127.0.0.1:5000/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          document_type: "nda", 
-          context: formData,
-        }),
-      });
+  setIsDownloading(true);
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/generate`, {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        document_type: "nda",
+        context: formData,
+      }),
+    });
 
-      if (!response.ok) {
-        const errData = await response.text();
-        console.error("Server error:", errData);
-        throw new Error(`Failed to generate PDF: ${response.statusText}`);
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "NDA_Agreement.pdf"; 
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-
-      navigate("/download-complete", { state: { html: getPreview() } });
-    } catch (err) {
-      console.error("Error generating PDF:", err);
-      alert("Error generating PDF. Check the console for details.");
-    } finally {
-      setIsDownloading(false);
+    if (!response.ok) {
+      const errData = await response.text();
+      console.error("Server error:", errData);
+      throw new Error(`Failed to generate PDF: ${response.statusText}`);
     }
-  };
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "NDA_Agreement.pdf";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+
+    navigate("/download-complete", { state: { html: getPreview() } });
+  } catch (err) {
+    console.error("Error generating PDF:", err);
+    alert("Error generating PDF. Check the console for details.");
+  } finally {
+    setIsDownloading(false);
+  }
+};
+
 
   const renderField = (
     key,
