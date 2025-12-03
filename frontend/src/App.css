@@ -38,15 +38,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --- Auth/Login Styles --- */
-.auth-container {
+ /* .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f0f4f8; /* Very light, cool background */
-}
-
-.auth-card {
+  background-color: #f0f4f8; 
+} */
+/* 
+ .auth-card {
   background: var(--white);
   padding: 2.5rem;
   border-radius: var(--border-radius);
@@ -117,7 +117,298 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--secondary-teal);
   cursor: pointer;
   font-weight: 600;
+}  */
+
+/* ... (existing App.css content) ... */
+/* ===========================
+   BACKGROUND IMAGE
+=========================== */
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  /* Background image */
+  background-image: url("https://t3.ftcdn.net/jpg/16/47/85/76/240_F_1647857616_zEBq0pRngle76AB3JEgiLoYsBWriLno7.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+  padding: 20px;
+
+  /* Blur effect for beautiful look */
+  backdrop-filter: blur(5px);
 }
+
+/* Dark overlay for readability */
+.auth-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* ===========================
+   GLASSMORPHIC LOGIN CARD
+=========================== */
+
+.auth-card {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 420px;
+
+  padding: 2.8rem 2.5rem;
+  border-radius: 12px;
+
+  /* Glassmorphism */
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+
+  /* Border like sample */
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  text-align: center;
+  color: white;
+
+  /* Drop shadow */
+  box-shadow: 0px 25px 50px rgba(0, 0, 0, 0.55);
+
+  animation: fadeIn 0.35s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   TITLE STYLING (Like sample)
+=========================== */
+
+.auth-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+/* ===========================
+   INPUT STYLING
+=========================== */
+
+.input-icon-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.4rem;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #dcdcdc;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.85rem 0.85rem 0.85rem 40px;
+
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #c0c0c0;
+
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s ease;
+}
+
+.auth-input::placeholder {
+  color: #d8d8d8;
+}
+
+.auth-input:focus {
+  border-bottom: 1px solid #a94bff; /* Purple highlight */
+}
+
+/* ===========================
+   LOGIN BUTTON (Purple)
+=========================== */
+
+.new-login-btn {
+  width: 50%;
+  padding: 0.85rem;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+
+  border-radius: 6px;
+  border: none;
+
+  background-color: #d5baeb;
+  color: black;
+
+  margin-top: 10px;
+
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  border-radius: 18px;
+}
+
+.new-login-btn:hover {
+  background: rgb(85, 85, 245);  
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   OR DIVIDER
+=========================== */
+
+.divider-or {
+  margin: 1.7rem 0;
+  color: #cfcfcf;
+
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.divider-or::before,
+.divider-or::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.divider-or::before {
+  margin-right: 8px;
+}
+.divider-or::after {
+  margin-left: 8px;
+}
+
+
+/* ===========================
+   GOOGLE LOGIN BUTTON
+=========================== */
+
+.google-btn.new-google-btn {
+  width: 70%;
+  padding: 0.85rem;
+
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px; /* space between icon & text */
+
+  font-size: 1rem;
+  font-weight: 500;
+  color: black;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* Hover Effect */
+.google-btn.new-google-btn:hover {
+  background: #f6f6f6;
+  transform: translateY(-2px);
+}
+
+/* Google Logo */
+.google-original-icon {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+  padding-right: 2px;
+}
+
+
+/* ===========================
+   FOOTER TEXT
+=========================== */
+
+.auth-footer {
+  margin-top: 1rem;
+  color: #dcdcdc;
+}
+
+.auth-footer span {
+  color: rgb(85, 85, 245);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-footer span:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   REGISTER BUTTON (Purple Theme)
+=========================== */
+
+.register-btn-submit {
+  width: 40%;
+  padding: 0.4rem;
+
+  background: #d5baeb;            /* Main purple */
+  color: black;
+
+  border: none;
+  border-radius: 8px;             /* Rounded corners */
+
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+
+  gap: 8px;
+  transition: 0.25s ease-in-out;
+}
+
+/* Hover Effect */
+.register-btn-submit:hover {
+  background: rgb(85, 85, 245);            /* Slightly darker purple */
+  transform: translateY(-2px);
+}
+
+/* Active Click Effect */
+.register-btn-submit:active {
+  transform: translateY(0);
+}
+
+/* Disabled State */
+.register-btn-submit:disabled {
+  background: #b978ff89;          /* Light faded purple */
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Flex Center Helper (if needed) */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 /* --- Dashboard Panel Styles --- */
 .app-panel {
